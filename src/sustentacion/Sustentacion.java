@@ -14,7 +14,7 @@ public class Sustentacion {
     /**
      * @param args the command line arguments
      */
-    static String nombre,auxiliar;
+    static String nombre;
     static int cantidadven,borrar,aux,venta;
     static double precio,ganancia,gananciatotal;
     static inventario arrayObjetos[];
@@ -68,7 +68,6 @@ public class Sustentacion {
         System.out.println("Digite el nombre del producto");
         nombre = lector.next();
         for (int i=0;i<con;i++){
-            auxiliar=arrayObjetos[i].getNombre();
             if(arrayObjetos[i].getNombre().equals(nombre)){
                 System.out.println("El nombre es "+arrayObjetos[i].getNombre());
                 System.out.println("la cantidad es"+arrayObjetos[i].getCantidad());
