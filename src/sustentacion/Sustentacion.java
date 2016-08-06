@@ -15,7 +15,7 @@ public class Sustentacion {
      * @param args the command line arguments
      */
     static String nombre;
-    static int cantidadven,borrar,aux,venta;
+    static int cantidadven,cantidad,borrar,aux,venta,control;
     static double precio,ganancia,gananciatotal;
     static inventario arrayObjetos[];
     public static void main(String[] args) {
@@ -35,20 +35,18 @@ public class Sustentacion {
             System.out.println("3. Eliminar producto");
             System.out.println("4. Mostrar Inventario");
             System.out.println("5. Realizar Venta");
-            System.out.println("6. Consultar saldo");
-            System.out.println("7. Mostrar Ganancias totales");
+            System.out.println("6. Mostrar Ganancias totales");
             System.out.println("0. Salir");
             opc = lector.nextInt();
            
             switch (opc) {
                 
                 case 1: arrayObjetos[con].agregar_producto();
-                      con=con++;  
+                        con=con++;  
                     break;
                 case 2: buscar_producto(con);                        
                     break;
                 case 3:eliminar_producto(con);
-                        con=con--;
                     break;
                 case 4: mostrar_inventario(con);
                     break;
@@ -63,46 +61,52 @@ public class Sustentacion {
             
     }
     
+    
     public static void buscar_producto(int con){
         Scanner lector = new Scanner(System.in);
         System.out.println("Digite el nombre del producto");
         nombre = lector.next();
+        control=0;
         for (int i=0;i<con;i++){
             if(arrayObjetos[i].getNombre().equals(nombre)){
                 System.out.println("El nombre es "+arrayObjetos[i].getNombre());
                 System.out.println("la cantidad es"+arrayObjetos[i].getCantidad());
-                System.out.println("el precio es"+arrayObjetos[i].getPrecio());
-            }else{
-                System.out.println("no existe el produto");
-                }
+                System.out.println("el precio es $"+arrayObjetos[i].getPrecio());
+                control=1;
+            }
+        }
+        if (control==0){
+             System.out.println("no existe el produto");
         }
     }
     public static void eliminar_producto(int con){
        Scanner lector = new Scanner(System.in);
         System.out.println("Digite el nombre del producto");
         nombre = lector.next();
+        control=0;
         for (int i=0;i<con;i++){
             if(arrayObjetos[i].getNombre().equals(nombre)){
                 borrar=i;
-                
                 for (int borrar=i;borrar<con;borrar++){
                 arrayObjetos[borrar]=arrayObjetos[borrar+1];
+                control=1;
                 }
-            }else{
-                System.out.println("no existe el produto");
-                }
+                con=con--;
+            }
+        }
+        if (control==0){
+             System.out.println("no existe el produto");
         } 
-        
-     }
+    }
     
     public static void mostrar_inventario(int con){
         for (int i=0;i<con;i++){
             System.out.println("El nombre del producto es"+arrayObjetos[i].getNombre());
             System.out.println("La cantidad del producto es"+arrayObjetos[i].getCantidad());
             System.out.println("El precio del producto es"+arrayObjetos[i].getPrecio());
-            
         } 
-     }
+    }
+    
      public static void realizar_ventas(int con){
         Scanner lector = new Scanner(System.in);
         System.out.println("Digite el nombre del producto");
@@ -116,17 +120,13 @@ public class Sustentacion {
                 arrayObjetos[i].setCantidad(aux);
                 cantidadven=cantidadven+arrayObjetos[i].getVentas();
                 arrayObjetos[i].setVentas(cantidadven);
-                
+            }
         }
-            
-     }
-    
-        
-     }
+    }
      /*Mostrar Ganancias Totales: Se visualizará cada uno de los productos con la cantidad de
 ventas de cada producto y el valor total de la venta, finalmente muestra el valor total de lo que ha
 vendido. */
-     public static void mostrar_ganancias(int con){
+    public static void mostrar_ganancias(int con){
         for (int i=0;i<con;i++){
             System.out.println("El nombre del producto es"+arrayObjetos[i].getNombre());
             System.out.println("La cantidad del producto es"+arrayObjetos[i].getCantidad());
@@ -134,10 +134,11 @@ vendido. */
             System.out.println("La cantidad de ventas es"+arrayObjetos[i].getVentas());    
             System.out.println("La cantidad de ganancia del articulo es"+arrayObjetos[i].getVentas()*arrayObjetos[i].getPrecio());    
             for (int t=0;t<con;t++){
-                gananciatotal=arrayObjetos[t].getVentas()*arrayObjetos[t].getPrecio();
+                gananciatotal=gananciatotal+(arrayObjetos[t].getVentas()*arrayObjetos[t].getPrecio());
             }
-            System.out.println("La cantidad total de ganancias es"+gananciatotal);
+            
         } 
-     }
+        System.out.println("La cantidad total de ganancias es"+gananciatotal);
+    }
 }
 
